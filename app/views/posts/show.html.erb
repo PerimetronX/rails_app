@@ -1,0 +1,97 @@
+<h1>ToDo</h1>
+<h2>詳細</h2>
+<div class="post">
+  <p><b><%= @post.title %></b></p>
+  <p><%= image_tag @post.image_url, size: "250x200" if @post.image? %></p>
+  <p><%= @post.contents %></p>
+  <p><%= @post.created_at %></p>
+  <p><%= @post.type %></p>
+
+  <% if user_signed_in? %>
+    <% if current_user.already_liked?(@post) %>
+      <%= link_to post_like_path(@post), method: :delete do %>
+        <i class="fas fa-heart"></i><%= @post.likes.count %>
+      <% end %>
+    <% else %>
+      <%= link_to post_likes_path(@post), method: :post do %>
+        <i class="far fa-heart"></i><%= @post.likes.count %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <i class="far fa-heart"></i><%= @post.likes.count %>
+  <% end %>
+
+</div>
+
+<%#= 追加　mapが表示される部分 %>
+<div id="map"></div>
+
+<%#= 追加　<div id="map"></div>の大きさを定義 400px×400px 〇〇.scssに書いても良い。 %>
+<style>
+    #map {
+        height: 400px;
+        width: 400px;
+    }
+</style>
+
+  <%#= 追加　mapを実際に表示させる関数をまとめた部分、バックエンドのためユーザーからは見れない。%>
+<script>
+  let map
+
+  // mapの表示関数 
+  function initMap() {
+    geocoder = new google.maps.Geocoder()
+
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: {
+        //@postにlatitude,longitudeの情報が入っている。@postは自分のコントローラーに合うように適宜変更すること。
+        lat: <%= @post.latitude %> ,
+        lng: <%= @post.longitude %>
+      },
+      zoom: 14,
+    });
+
+    (function () {
+      var contentString = "住所：<%= @post.address %>";
+
+      var marker = new google.maps.Marker({
+        //@postにlatitude,longitudeの情報が入っている。@postは自分のコントローラーに合うように適宜変更すること。
+        position: {
+          lat: <%= @post.latitude %>,
+          lng: <%= @post.longitude %>
+        },
+        map: map,
+        title: contentString
+      });
+
+    })();
+  }
+</script>
+<%#= .envファイルに書かれているAPIキーを呼び出す部分。%>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY']%>&callback=initMap" async defer></script>
+
+
+<div class="comment-wrapper">
+  <p>コメント一覧</p>
+  <% @comments.each do |c| %>
+    <div>
+      <%= c.user.email unless c.user.blank? %>
+      <br>
+      <%= c.content %>
+    </div>
+      <br>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <%= form_with(model: [@post, @comment], local: true) do |f| %>
+      <%= f.text_area :content %>
+      <%= button_tag type: "submit" do %>
+        <i class="far fa-comments"></i> コメントする
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<%= link_to "編集する", edit_post_path(@post.id) %>
+<%= link_to "リスト一覧に戻る", posts_path %>
+<%= link_to "削除する", post_path(@post.id), method: :delete %>

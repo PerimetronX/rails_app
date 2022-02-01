@@ -1,0 +1,51 @@
+<h1>GoTo</h1>
+<%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
+<h3>リスト一覧</h3>
+
+<%= search_form_for @q  do |f| %>
+    <%= f.select :type_eq, [['北海道', '北海道'], ['青森', '青森'], ["岩手", "岩手"], ["宮城", "宮城"],["秋田", "秋田"], ["山形", "山形"], ["福島", "福島"], ["茨城", "茨城"], ["栃木", "栃木"], ["群馬", "群馬"], ["埼玉", "埼玉"], ["千葉", "千葉"], ["東京", "東京"], ["神奈川", "神奈川"], ["新潟", "新潟"], ["富山", "富山"], ["石川", "石川"], ["福井", "福井"], ["山梨", "山梨"], ["長野", "長野"], ["岐阜", "岐阜"], ["静岡", "静岡"], ["愛知", "愛知"], ["三重", "三重"], ["滋賀", "滋賀"], ["京都", "京都"], ["大阪", "大阪"], ["兵庫", "兵庫"], ["奈良", "奈良"], ["和歌山", "和歌山"], ["鳥取", "鳥取"], ["島根", "島根"], ["岡山", "岡山"], ["広島", "広島"], ["山口", "山口"], ["徳島", "徳島"], ["香川", "香川"], ["愛媛", "愛媛"], ["高知", "高知"], ["福岡", "福岡"], ["佐賀", "佐賀"], ["長崎", "長崎"], ["熊本", "熊本"], ["大分", "大分"], ["宮崎", "宮崎"], ["鹿児島", "鹿児島"], ["沖縄", "沖縄"]], {include_blank: '都道府県'} %>  
+    <%= f.submit "search" %></p>
+<% end %>
+
+
+<%= link_to "新規", new_post_path %>
+<div class="posts-container">
+
+  <% if user_signed_in? %>
+  <%= link_to "マイページへ", user_path(current_user.id) %>
+  <% end %>
+
+  <% @posts.each do |p| %>
+  <div class="post">
+    <br>
+    <a href="/users/<%= p.user.id %>"><%= p.user.name %></a>
+    <%= p.user.email %>
+    <br>
+    <b><%= p.title %></b><br>
+    <%= image_tag p.image_url, size: "250x200" if p.image? %><br>
+    <%= p.contents %><br>
+    <%= p.type %><br>
+
+  <% if user_signed_in? %>
+    <% if current_user.already_liked?(p) %>
+        <%= link_to post_like_path(id: p.id, post_id: p.id), method: :delete do %>
+            <i class="fas fa-heart"></i><%= p.likes.count %>
+        <% end %>
+    <% else %>
+        <%= link_to post_likes_path(id: p.id, post_id: p.id), method: :post do %>
+            <i class="fas fa-heart"></i><%= p.likes.count %>
+        <% end %>
+    <% end %>
+  <% else %>
+    <i class="fas fa-heart"></i><%= p.likes.count %>
+  <% end %>
+
+    <%= p.created_at %>
+    <%= link_to "詳細へ", post_path(p.id) %>
+    <% if user_signed_in? && current_user.id == p.user_id %>  
+      <%= link_to "編集する", edit_post_path(p.id) %>
+      <%= button_to "削除する", post_path(p.id), method: :delete %>
+    <% end %> 
+  </div>
+  <% end %>
+</div>
