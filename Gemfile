@@ -59,7 +59,6 @@ gem 'cloudinary'
 gem 'dotenv-rails'
 
 gem 'geocoder'
-gem 'dotenv-rails'
 
 gem 'ransack'
 
