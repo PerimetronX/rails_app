@@ -2,9 +2,8 @@ class PostsController < ApplicationController
     before_action :authenticate_user!
 
     def index
-        @posts = Post.all.reverse
         @q = Post.ransack(params[:q])
-        @posts= @q.result
+        @posts= @q.result.order(id: "DESC")
     end
 
     def new

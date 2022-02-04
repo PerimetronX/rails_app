@@ -75,7 +75,7 @@
   <p>コメント一覧</p>
   <% @comments.each do |c| %>
     <div>
-      <%= c.user.email unless c.user.blank? %>
+      <a href="/users/<%= c.user.id %>"><%= c.user.email unless c.user.blank? %></a>
       <br>
       <%= c.content %>
     </div>
@@ -92,6 +92,8 @@
   <% end %>
 </div>
 
-<%= link_to "編集する", edit_post_path(@post.id) %>
 <%= link_to "リスト一覧に戻る", posts_path %>
-<%= link_to "削除する", post_path(@post.id), method: :delete %>
+<% if user_signed_in? && current_user.id == @post.user_id %>  
+  <%= link_to "編集する", edit_post_path(@post.id) %>
+  <%= link_to "削除する", post_path(@post.id), method: :delete %>
+<% end %> 
