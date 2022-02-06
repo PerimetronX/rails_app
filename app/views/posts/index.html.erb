@@ -1,5 +1,11 @@
 <h1>GoTo</h1>
-<%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
+<% if user_signed_in? %>
+  <%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
+<% else %>
+  <%= link_to "ログイン", new_user_session_path %>
+  <%= link_to "新規登録", new_user_registration_path %>
+<% end %>
+
 <h3>リスト一覧</h3>
 
 <%= search_form_for @q  do |f| %>
@@ -22,7 +28,11 @@
     <%= p.user.email %>
     <br>
     <b><%= p.title %></b><br>
-    <%= image_tag p.image_url, size: "250x200" if p.image? %><br>
+    <% if p.image.present? %>
+      <%= image_tag p.image_url, size: "250x200" %><br>
+    <% else %>
+      <%= image_tag "noimage.jpeg", size: "250x200" %><br>
+    <% end %>
     <%= p.contents %><br>
     <%= p.type %><br>
 
@@ -40,7 +50,7 @@
     <i class="fas fa-heart"></i><%= p.likes.count %>
   <% end %>
 
-    <%= p.created_at %>
+    <%= p.created_at.to_s(:datetime_jp) %>
     <%= link_to "詳細へ", post_path(p.id) %>
     <% if user_signed_in? && current_user.id == p.user_id %>  
       <%= link_to "編集する", edit_post_path(p.id) %>

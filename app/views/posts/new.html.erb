@@ -4,8 +4,8 @@
   <div class="field">
     <%= f.label :title %><br>
     <%= f.text_field :title, :size => 50 %><br>
-    <%= f.label :contents %>
-    <%= f.text_field :contents, :size => 140 %>
+    <%= f.label :contents %><br>
+    <%= f.text_area :contents, :size => '30x5' %>
     <%= f.select :type, [['都道府県', ''], ['北海道', '北海道'], ['青森', '青森'], ["岩手", "岩手"], ["宮城", "宮城"],["秋田", "秋田"], ["山形", "山形"], ["福島", "福島"], ["茨城", "茨城"], ["栃木", "栃木"], ["群馬", "群馬"], ["埼玉", "埼玉"], ["千葉", "千葉"], ["東京", "東京"], ["神奈川", "神奈川"], ["新潟", "新潟"], ["富山", "富山"], ["石川", "石川"], ["福井", "福井"], ["山梨", "山梨"], ["長野", "長野"], ["岐阜", "岐阜"], ["静岡", "静岡"], ["愛知", "愛知"], ["三重", "三重"], ["滋賀", "滋賀"], ["京都", "京都"], ["大阪", "大阪"], ["兵庫", "兵庫"], ["奈良", "奈良"], ["和歌山", "和歌山"], ["鳥取", "鳥取"], ["島根", "島根"], ["岡山", "岡山"], ["広島", "広島"], ["山口", "山口"], ["徳島", "徳島"], ["香川", "香川"], ["愛媛", "愛媛"], ["高知", "高知"], ["福岡", "福岡"], ["佐賀", "佐賀"], ["長崎", "長崎"], ["熊本", "熊本"], ["大分", "大分"], ["宮崎", "宮崎"], ["鹿児島", "鹿児島"], ["沖縄", "沖縄"]] %>
   </div>
   <div class="field">
@@ -20,6 +20,7 @@
     <%#= 追加、addressカラムの情報を地図で表示させるためのボタン、クリックするとcodeAddress()が実行%>
   <div class="field">
       <input type="button" value="位置情報を登録" onclick="getAddress()">
+      <input type="button" value="場所を地図で表示" onclick="codeAddress()">
   </div>
 
   <%= f.submit "追加する" %>
@@ -53,18 +54,12 @@ function initMap(){
         center: LatLng,
         zoom: 15
       });
-
-　// マーカーを立てる
-      var marker = new google.maps.Marker({
-              map : map,         
-              position : LatLng   
-            });
-      });
+  });
 }
 
 
 let geocoder
-
+var markers = new Array();
 
 function getAddress(){
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -80,7 +75,42 @@ function getAddress(){
         address = results[0].formatted_address;
         document.getElementById('post_address').value = address;
       });
+      map.setCenter(LatLngInput);
+      map.setZoom(15);
+      if (markers.length > 0) {
+        markers[0].setMap(null);
+        markers.length = 0;
+      }
+      var marker = new google.maps.Marker({
+              map : map,         
+              position : LatLngInput
+      });
+      markers.push(marker)
     });
+}
+
+function codeAddress(){
+  //右辺のtweet_addressの部分はaddressカラムの入力フォームの "id" を書く。今回はf.text_field :addressの部分
+  //idの確認方法はgoogle chromeのデベロッパーツールでみる。
+  let inputAddress = document.getElementById('post_address').value;
+
+  geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+    if (status == 'OK') {
+      map.setCenter(results[0].geometry.location);
+      map.setZoom(15);
+      if (markers.length > 0) {
+        markers[0].setMap(null);
+        markers.length = 0;
+      }
+      var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+      });
+      markers.push(marker)
+    } else {
+      alert('該当する結果がありませんでした：' + status);
+    }
+  });   
 }
 
 

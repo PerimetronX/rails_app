@@ -2,9 +2,17 @@
 <h2>詳細</h2>
 <div class="post">
   <p><b><%= @post.title %></b></p>
-  <p><%= image_tag @post.image_url, size: "250x200" if @post.image? %></p>
-  <p><%= @post.contents %></p>
-  <p><%= @post.created_at %></p>
+  <% if @post.image.present? %>
+    <p><%= image_tag @post.image_url, size: "250x200" %></p>
+  <% else %>
+    <p><%= image_tag "noimage.jpeg", size: "250x200" %></p>
+  <% end %>
+  <%if @post.contents.nil? %>  
+    <p><%=@post.contents%></p>
+  <% else %>
+    <p><%=safe_join(@post.contents.split("\n"),tag(:br))%></p>
+  <% end %>
+  <p><%= @post.created_at.to_s(:datetime_jp) %></p>
   <p><%= @post.type %></p>
 
   <% if user_signed_in? %>
