@@ -34,7 +34,6 @@
       <%= image_tag "noimage.jpeg", size: "250x200" %><br>
     <% end %>
     <%= p.contents %><br>
-    <%= p.type %><br>
 
   <% if user_signed_in? %>
     <% if current_user.already_liked?(p) %>
