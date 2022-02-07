@@ -48,7 +48,7 @@
 
 <script>
 let map
-
+<% if @post.address.present? %>
 //mapの表示関数。center:{lat:〇〇,lng:〇〇},zoom: 〇,の〇は好きな値に変更可能。
 function initMap(){
 
@@ -80,6 +80,24 @@ function initMap(){
 
   })();
 }
+<% else %>
+function initMap(){
+
+  geocoder = new google.maps.Geocoder();
+
+  // 位置情報を取得する
+  navigator.geolocation.getCurrentPosition(function (position) {
+    LatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+　// 取得した位置情報を中心に表示
+   map = new google.maps.Map(document.getElementById('map'), {
+        center: LatLng,
+        zoom: 15
+      });
+  });
+}
+<% end %>
+
 
 
 let geocoder
