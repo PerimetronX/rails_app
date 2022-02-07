@@ -31,6 +31,8 @@
 
 </div>
 
+<% if @post.address.present? %>
+
 <%#= 追加　mapが表示される部分 %>
 <div id="map"></div>
 
@@ -56,7 +58,7 @@
         lat: <%= @post.latitude %> ,
         lng: <%= @post.longitude %>
       },
-      zoom: 14,
+      zoom: 15,
     });
 
     (function () {
@@ -77,7 +79,7 @@
 </script>
 <%#= .envファイルに書かれているAPIキーを呼び出す部分。%>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY']%>&callback=initMap" async defer></script>
-
+<% end %>
 
 <div class="comment-wrapper">
   <p>コメント一覧</p>
