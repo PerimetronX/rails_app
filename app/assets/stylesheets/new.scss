@@ -1,0 +1,70 @@
+.n-table.n-table-form {
+    border-collapse: separate;
+    border-top: 1px solid #B7B5B5;
+    border-left: 1px solid #B7B5B5;
+    border-right: 1px solid #B7B5B5;
+}
+
+tr th {
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #B7B5B5;
+    border-right: 1px solid #000000;
+    background-color: #E4E4E4;
+}
+
+tr td {
+    border-bottom: 1px solid #B7B5B5;
+    vertical-align: inherit;
+    padding: 0.6rem;
+}
+
+.n-table {
+    width: 800px;
+    background-color: #fff;
+}
+
+.n-detail {
+    margin-bottom: 25px;
+    line-height: 1.5;
+    font-size: 1.2rem;
+}
+
+table {
+    border-spacing: 0;
+    word-break: break-all;
+    empty-cells: show;
+    margin-left: 0%;
+}
+
+.field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.new {
+    margin: 0 auto;
+}
+
+.new-header {
+    width: 100%;
+    height: 70px;
+    margin-bottom:20px;
+    border-top: solid 3px #799eec;
+    border-bottom: solid 3px #799eec;
+    text-align: center;
+}
+
+.new-header h1{
+    line-height: 70px;
+}
+
+.new-end {
+    text-align: center;
+}
+
+.new-end input[type="submit"] {
+    width: 100px;
+    height: 50px;
+}

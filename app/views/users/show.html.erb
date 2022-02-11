@@ -1,5 +1,8 @@
-<h1>users#show</h1>
-<p>名前 : <%= @user.name %></p>
+<%= stylesheet_link_tag 'mypage', :media => "all" %>
+
+<div class="mypage">
+<h1>マイページ</h1>
+<p>ユーザー名 : <%= @user.name %></p>
 <p>メールアドレス : <%= @user.email %></p>
 <p>プロフィール : <%= @user.profile %></p>
 
@@ -8,20 +11,83 @@
 <% end %>
 
 <h2>ユーザーの投稿一覧</h2>
+<div class="posts-container">
 <% @user.posts.each do |p| %>
-  <%= p.user.name %>
-  <%= p.title %>
-  <%= p.contents %><br>
+  <div class="post">
+    <div class="post-image">
+    <% if p.image.present? %>
+      <%= image_tag p.image_url, size: "250x200" %><br>
+    <% else %>
+      <%= image_tag "noimage.jpeg", size: "250x200" %><br>
+    <% end %>
+    </div>
+    <b><%= p.title %></b><br>
+    <br>
+
+  <% if user_signed_in? %>
+    <% if current_user.already_liked?(p) %>
+        <%= link_to post_like_path(id: p.id, post_id: p.id), method: :delete do %>
+            <i class="far fa-heart"></i><%= p.likes.count %>
+        <% end %>
+    <% else %>
+        <%= link_to post_likes_path(id: p.id, post_id: p.id), method: :post do %>
+            <i class="far fa-heart"></i><%= p.likes.count %>
+        <% end %>
+    <% end %>
+  <% else %>
+    <i class="fas fa-heart"></i><%= p.likes.count %>
+  <% end %>
+
+    <%= link_to "詳細", post_path(p.id) %>
+    <% if user_signed_in? && current_user.id == p.user_id %>  
+      <%= link_to "編集する", edit_post_path(p.id) %>
+      <%= link_to "削除する", post_path(p.id), method: :delete %>
+    <% end %> 
+    <p><%= p.created_at.to_s(:datetime_jp) %></p>
+  </div>
 <% end %>
+</div>
+
 
 <!-- 以下はいいね機能を実装している場合-->
 <h2>ユーザーがいいねした投稿一覧</h2>
+<div class="posts-container">
 <% @user.liked_posts.each do |p| %>
-  <%= p.user.name %>
-  <%= p.title %>
-  <%= p.contents %>
-  <br>
+  <div class="post">
+    <div class="post-image">
+    <% if p.image.present? %>
+      <%= image_tag p.image_url, size: "250x200" %><br>
+    <% else %>
+      <%= image_tag "noimage.jpeg", size: "250x200" %><br>
+    <% end %>
+    </div>
+    <b><%= p.title %></b><br>
+    <br>
+
+  <% if user_signed_in? %>
+    <% if current_user.already_liked?(p) %>
+        <%= link_to post_like_path(id: p.id, post_id: p.id), method: :delete do %>
+            <i class="far fa-heart"></i><%= p.likes.count %>
+        <% end %>
+    <% else %>
+        <%= link_to post_likes_path(id: p.id, post_id: p.id), method: :post do %>
+            <i class="far fa-heart"></i><%= p.likes.count %>
+        <% end %>
+    <% end %>
+  <% else %>
+    <i class="fas fa-heart"></i><%= p.likes.count %>
+  <% end %>
+
+    <%= link_to "詳細", post_path(p.id) %>
+    <% if user_signed_in? && current_user.id == p.user_id %>  
+      <%= link_to "編集する", edit_post_path(p.id) %>
+      <%= link_to "削除する", post_path(p.id), method: :delete %>
+    <% end %> 
+    <p><%= p.created_at.to_s(:datetime_jp) %></p>
+  </div>
 <% end %>
+</div>
 <!-- ここまで-->
 
 <%= link_to "投稿一覧に戻る", posts_path %>
+</div>

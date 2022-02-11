@@ -1,19 +1,27 @@
-<h1>ToDo</h1>
-<h2>詳細</h2>
+<%= stylesheet_link_tag 'show', :media => "all" %>
+
+
 <div class="post">
-  <p><b><%= @post.title %></b></p>
+  <div class="title">
+  <b><%= @post.title %></b>
+  </div>
+  <div class="image">
   <% if @post.image.present? %>
-    <p><%= image_tag @post.image_url, size: "250x200" %></p>
+    <%= image_tag @post.image_url, size: "500x400" %>
   <% else %>
-    <p><%= image_tag "noimage.jpeg", size: "250x200" %></p>
+    <%= image_tag "noimage.jpeg", size: "500x400" %>
   <% end %>
+  </div>
+  <div class="contents">
   <%if @post.contents.nil? %>  
-    <p><%=@post.contents%></p>
+    <%=@post.contents%>
   <% else %>
-    <p><%=safe_join(@post.contents.split("\n"),tag(:br))%></p>
+    <%=safe_join(@post.contents.split("\n"),tag(:br))%>
   <% end %>
+  </div>
   <p><%= @post.created_at.to_s(:datetime_jp) %></p>
-  <p><%= @post.type %></p>
+
+  <%= @post.type %>
 
   <% if user_signed_in? %>
     <% if current_user.already_liked?(@post) %>

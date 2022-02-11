@@ -1,0 +1,56 @@
+.posts-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    padding: 0 auto;
+    // width:1500px;
+    // margin: 0 auto;
+}
+
+.post {
+    margin: 1%;
+    width: 275px;
+    height: 300px;
+    background-color: #ebebeb;
+    padding: 2%;
+    border-radius: 10px;
+    box-shadow: 5px 2px 4px 2px #799eec;
+}
+
+.post img {
+    border-radius: 10px;
+}
+
+.posts-search {
+    text-align: center;
+}
+
+.indexposts {
+    text-align: center;
+}
+
+.index-header {
+    background-image: url("assets/hikone4.png");
+    background-size: cover;
+    width: 100%;
+    height: 700px;
+    margin-bottom:50px;
+    border-top: solid 3px #799eec;
+    border-bottom: solid 3px #799eec;
+    display: table;
+}
+
+.index-header h1 {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    color: rgba(201, 224, 247, 0.6);
+    font-family: 'Sacramento', cursive;
+    font-size: 70px;
+}
+
+.posts-search input[type="submit"] {
+    width: 36px;
+    height: 16px;
+}
