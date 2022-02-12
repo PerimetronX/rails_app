@@ -21,7 +21,13 @@
   </div>
   <p><%= @post.created_at.to_s(:datetime_jp) %></p>
 
-  <%= @post.type %>
+  <% if @post.type == "大阪" || @post.type == "京都" %>
+    <%= @post.type %>府
+  <% elsif @post.type == "東京" %>
+    <%= @post.type %>都
+  <% else %>
+    <%= @post.type %>県
+  <% end %>
 
   <% if user_signed_in? %>
     <% if current_user.already_liked?(@post) %>

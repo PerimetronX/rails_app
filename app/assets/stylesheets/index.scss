@@ -4,9 +4,8 @@
     flex-wrap: wrap;
     align-items: stretch;
     padding: 0 auto;
-    // width:1500px;
-    // margin: 0 auto;
-}
+    margin-top: 50px;
+    }
 
 .post {
     margin: 1%;
@@ -15,7 +14,7 @@
     background-color: #ebebeb;
     padding: 2%;
     border-radius: 10px;
-    box-shadow: 5px 2px 4px 2px #799eec;
+    box-shadow: 1px 1px 4px 2px #799eec;
 }
 
 .post img {
@@ -51,6 +50,13 @@
 }
 
 .posts-search input[type="submit"] {
-    width: 36px;
-    height: 16px;
+    width: 73px;
+    height: 27px;
+    border-radius: 60px;
+    border: 1px solid black;
+}
+
+.posts-search input[type="select"] {
+    width: 200px;
+    height: 40px;
 }

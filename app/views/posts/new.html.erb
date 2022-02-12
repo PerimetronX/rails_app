@@ -3,7 +3,10 @@
 <div class="new-header">
   <h1>新規投稿</h1>
 </div>
-<%= link_to "リスト一覧に戻る", posts_path %>
+
+<div class="back">
+<%= button_to "リスト一覧に戻る", posts_path %>
+</div>
 
 <div class="new">
 <%= form_for @post do |f| %>
