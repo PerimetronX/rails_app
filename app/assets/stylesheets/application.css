@@ -8,7 +8,6 @@
   } */
 
   body {
-    margin-top:100px;
     font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ",
       Meiryo, "ＭＳ Ｐゴシック", sans-serif;
     background-color: #ebebeb;
@@ -65,6 +64,7 @@
 
   main {
     min-height: 100vh;
+    margin-top:100px;
   }
 
   /* .wrapper { 

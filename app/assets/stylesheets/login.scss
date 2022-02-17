@@ -1,13 +1,48 @@
 .login-header {
-    margin-top: 100px;
+    border-bottom: solid 3px #799eec;
+    height: 70px;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.login-header h1{
+    line-height: 70px;
 }
 
 .login {
     height:60vh;
     text-align: center;
     .field {
-        width: 25%;
-        text-align: left;
-        margin: 0 auto;
+        margin-top: 50px;
     }
+    .field1 {
+        width: 70%;
+        margin-top: 20px;
+    }
+}
+
+.login-main {
+    border: solid 3px #799eec;
+    border-radius: 40px;
+    width: 25%;
+    margin: 0 auto;
+    margin-top: 60px;
+    padding-bottom: 50px;
+}
+
+input[type="email"], input[type="password"], input[type="text"] {
+    width: 70%;
+    height: 25px;
+}
+
+input[type="checkbox"] {
+    text-align: left;
+}
+
+.actions {
+    margin-top: 30px;
+}
+
+.login-end {
+    margin-top: 30px;
 }
