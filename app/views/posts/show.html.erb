@@ -5,12 +5,31 @@
   <div class="title">
   <b><%= @post.title %></b>
   </div>
+  <div class="heart">
+  <% if user_signed_in? %>
+    <% if current_user.already_liked?(@post) %>
+      <%= link_to post_like_path(@post), method: :delete do %>
+        <i class="fas fa-heart fa-lg"></i><%= @post.likes.count %>
+      <% end %>
+    <% else %>
+      <%= link_to post_likes_path(@post), method: :post do %>
+        <i class="far fa-heart fa-lg"></i><%= @post.likes.count %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <i class="far fa-heart fa-lg"></i><%= @post.likes.count %>
+  <% end %>
+  </div>
+
   <div class="image">
+  <div class="imgs">
   <% if @post.image.present? %>
     <%= image_tag @post.image_url, size: "500x400" %>
   <% else %>
     <%= image_tag "noimage.jpeg", size: "500x400" %>
   <% end %>
+  </div>
+  <div id="map" class="imgs"></div>
   </div>
   <div class="contents">
   <%if @post.contents.nil? %>  
@@ -21,34 +40,11 @@
   </div>
   <p><%= @post.created_at.to_s(:datetime_jp) %></p>
 
-  <% if @post.type == "大阪" || @post.type == "京都" %>
-    <%= @post.type %>府
-  <% elsif @post.type == "東京" %>
-    <%= @post.type %>都
-  <% else %>
-    <%= @post.type %>県
-  <% end %>
-
-  <% if user_signed_in? %>
-    <% if current_user.already_liked?(@post) %>
-      <%= link_to post_like_path(@post), method: :delete do %>
-        <i class="fas fa-heart"></i><%= @post.likes.count %>
-      <% end %>
-    <% else %>
-      <%= link_to post_likes_path(@post), method: :post do %>
-        <i class="far fa-heart"></i><%= @post.likes.count %>
-      <% end %>
-    <% end %>
-  <% else %>
-    <i class="far fa-heart"></i><%= @post.likes.count %>
-  <% end %>
 
 </div>
 
 <% if @post.address.present? %>
 
-<%#= 追加　mapが表示される部分 %>
-<div id="map"></div>
 
 <%#= 追加　<div id="map"></div>の大きさを定義 400px×400px 〇〇.scssに書いても良い。 %>
 <style>
@@ -114,10 +110,9 @@
       <% end %>
     <% end %>
   <% end %>
-</div>
-
-<%= link_to "リスト一覧に戻る", posts_path %>
+<%= link_to "投稿一覧に戻る", posts_path %>
 <% if user_signed_in? && current_user.id == @post.user_id %>  
   <%= link_to "編集する", edit_post_path(@post.id) %>
   <%= link_to "削除する", post_path(@post.id), method: :delete %>
 <% end %> 
+</div>

@@ -2,9 +2,10 @@
     margin: 1%;
     width: 275px;
     height: 300px;
-    background-color: #ffe3d5;
+    background-color: #ebebeb;
     padding: 2%;
     border-radius: 10px;
+    box-shadow: 1px 1px 4px 2px #799eec;
 }
 
 .posts-container {
@@ -15,3 +16,66 @@
     margin-left: 10%;
 }
 
+.info {
+    text-align: center;
+}
+/*タブ切り替え全体のスタイル*/
+.tabs {
+    padding-bottom: 40px;
+    background-color: #ebebeb;
+    width: 80vw;
+    margin: 70px auto;}
+  
+  /*タブのスタイル*/
+  .tab_item {
+    width: calc(100%/3);
+    height: 50px;
+    border-bottom: 3px solid #799eec;
+    background-color: #d9d9d9;
+    line-height: 50px;
+    font-size: 16px;
+    text-align: center;
+    color: #565656;
+    display: block;
+    float: left;
+    text-align: center;
+    font-weight: bold;
+    transition: all 0.2s ease;
+  }
+  .tab_item:hover {
+    opacity: 0.75;
+  }
+  
+  /*ラジオボタンを全て消す*/
+  input[name="tab_item"] {
+    display: none;
+  }
+  
+  /*タブ切り替えの中身のスタイル*/
+  .tab_content {
+    display: none;
+    padding: 40px 40px 0;
+    clear: both;
+    overflow: hidden;
+  }
+  
+  
+  /*選択されているタブのコンテンツのみを表示*/
+  #all:checked ~ #all_content,
+  #programming:checked ~ #programming_content,
+  #design:checked ~ #design_content {
+    display: block;
+  }
+  
+  /*選択されているタブのスタイルを変える*/
+  .tabs input:checked + .tab_item {
+    background-color: #799eec;
+    color: #fff;
+  }
+
+.back{
+  margin-left: 12%;
+  margin-bottom: 20px;
+  padding-top: 100px;
+  padding-bottom: 10px;
+}

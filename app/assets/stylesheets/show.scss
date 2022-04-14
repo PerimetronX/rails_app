@@ -5,14 +5,27 @@
     font-size: 45px;
 }
 
-// .image {
-//     // text-align: center;
-// }
+.image {
+    display:flex;
+    justify-content:center;
+}
 
-// .contents {
-//     // text-align: center;
-// }
+.imgs + .imgs{
+    margin-left:15px;
+}
+
+.comment-wrapper{
+    text-align: center;
+}
 
 .post {
     text-align: center;
+}
+
+.heart {
+    display:flex;
+    justify-content: flex-end;
+    width:915px;
+    margin: 0 auto;
+    margin-bottom: 10px;
 }
